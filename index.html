@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Arduino remote control</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  </head>
+  <body>
+    <div id="app">
+      <v-app>
+        <v-content>
+          <v-container class="mt-4" style="text-align: center">
+            <v-layout justify-center>
+              <div>
+                <h1>Arduino control</h1>
+                <br>
+                <v-btn @mousedown="forward" @click.stop="stop">FOR</v-btn>
+                <v-btn @mousedown="backward" @click.stop="stop">BACK</v-btn>
+                <v-btn @mousedown="left" @click.stop="stop">LEFT</v-btn>
+                <v-btn @mousedown="right" @click.stop="stop">RIGHT</v-btn>
+                <v-btn @mousedown="stop">STOP</v-btn>
+              </div>
+            </v-layout>
+          </v-container>
+        </v-content>
+      </v-app>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script>
+      var Vue = new Vue({
+        el: '#app',
+        mounted: () => {
+          window.addEventListener('keydown', (key) => {
+              switch (key.keyCode) {
+                case 38:
+                  Vue.forward()
+                  break;
+                case 40:
+                  Vue.backward()
+                  break;
+                case 37:
+                  Vue.left()
+                  break;
+                case 39:
+                  Vue.right()
+                  break;
+              }
+          })
+          window.addEventListener('keyup', (key) => {
+            switch (key.keyCode) {
+              case 38:
+                Vue.stop()
+                break;
+              case 40:
+                Vue.stop()
+                break;
+              case 37:
+                Vue.stop()
+                break;
+              case 39:
+                Vue.stop()
+                break;
+            }
+          })
+        },
+        methods: {
+          stop: () => {
+            axios.get('/stop')
+          },
+          forward: () => {
+            axios.get('/forward')
+          },
+          backward: () => {
+            axios.get('/backward')
+          },
+          left: () => {
+            axios.get('/left')
+          },
+          right: () => {
+            axios.get('/right')
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
