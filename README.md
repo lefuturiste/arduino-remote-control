@@ -10,7 +10,7 @@ To setup the NodeJs server, do a simple :
 
 environment variables: 
 
--`USB_COM_NAME`: the usb path/comname of the arduino device
+- `USB_COM_NAME`: the usb path/comname of the arduino device
 
 To run the server:
 
